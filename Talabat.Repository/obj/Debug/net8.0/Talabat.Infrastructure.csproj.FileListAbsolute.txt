@@ -1,0 +1,15 @@
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\Talabat.Infrastructure.csproj.AssemblyReference.cache
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\Talabat.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\Talabat.Infrastructure.AssemblyInfoInputs.cache
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\Talabat.Infrastructure.AssemblyInfo.cs
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\Talabat.Infrastructure.csproj.CoreCompileInputs.cache
+D:\project\Talabat\Talabat.Repository\bin\Debug\net8.0\Talabat.Infrastructure.deps.json
+D:\project\Talabat\Talabat.Repository\bin\Debug\net8.0\Talabat.Infrastructure.dll
+D:\project\Talabat\Talabat.Repository\bin\Debug\net8.0\Talabat.Infrastructure.pdb
+D:\project\Talabat\Talabat.Repository\bin\Debug\net8.0\Talabat.Core.dll
+D:\project\Talabat\Talabat.Repository\bin\Debug\net8.0\Talabat.Core.pdb
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\Talabat..4C4F926C.Up2Date
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\Talabat.Infrastructure.dll
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\refint\Talabat.Infrastructure.dll
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\Talabat.Infrastructure.pdb
+D:\project\Talabat\Talabat.Repository\obj\Debug\net8.0\ref\Talabat.Infrastructure.dll

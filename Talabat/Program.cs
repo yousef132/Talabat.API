@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using Talabat.APIs.Extentions;
 using Talabat.APIs.Middlewares;
-using Talabat.Repository.Data;
+using Talabat.Infrastructure.Generic_Repository.Data;
 
 namespace Talabat
 {
@@ -18,6 +19,13 @@ namespace Talabat
             builder.Services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            // made the lifetime singleton to cache the response at any time 
+            builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
+            {
+                var configs = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
+                return ConnectionMultiplexer.Connect(configs);
             });
 
             builder.Services.AddApplicationServices();

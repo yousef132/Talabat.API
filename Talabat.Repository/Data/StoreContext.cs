@@ -2,7 +2,7 @@
 using System.Reflection;
 using Talabat.Core.Entities;
 
-namespace Talabat.Infrastructure.Generic_Repository.Data
+namespace Talabat.Infrastructure.Data
 {
     public class StoreContext : DbContext
     {

@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 using Talabat.APIs.Extentions;
 using Talabat.APIs.Middlewares;
-using Talabat.Infrastructure.Generic_Repository.Data;
+using Talabat.Core.Entities.Identity;
+using Talabat.Infrastructure.Data;
+using Talabat.Infrastructure.Identity;
+using Talabat.Infrastructure.Identity.DataSeed;
 
 namespace Talabat
 {
@@ -20,6 +24,10 @@ namespace Talabat
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddDbContext<ApplicationIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Identity"));
+            });
 
             // made the lifetime singleton to cache the response at any time 
             builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
@@ -33,14 +41,20 @@ namespace Talabat
 
 
             var app = builder.Build();
+            #region Apply All Pending Migrations
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<StoreContext>();
+            var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            var identityDbContext = services.GetRequiredService<ApplicationIdentityDbContext>();
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
             try
             {
                 await context.Database.MigrateAsync();// apply migrations before running the app
                 await StoreContextSeed.SeedAsync(context);
+                await identityDbContext.Database.MigrateAsync();
+
+                await ApplicationIdentityDataSeeding.SeedUserAsync(userManager);
             }
             catch (Exception ex)
             {
@@ -49,6 +63,7 @@ namespace Talabat
                 logger.LogError(ex.ToString(), "Error During Apply Migrations");
             }
 
+            #endregion
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -57,25 +72,6 @@ namespace Talabat
             }
             app.UseMiddleware<ExceptionMiddleware>();
 
-            //app.Use(async (context, next) =>
-            //{
-            //    await context.Response.WriteAsync("FIRst Request");
-            //    await next.Invoke();
-            //    await context.Response.WriteAsync("first response");
-            //});
-
-            //app.Use(async (context, next) =>
-            //{
-            //    await context.Response.WriteAsync("second Request");
-            //    await next.Invoke();
-            //    await context.Response.WriteAsync("second response");
-            //});
-            //app.Use(async (context, next) =>
-            //{
-            //    await context.Response.WriteAsync("third Request");
-            //    await next.Invoke();
-            //    await context.Response.WriteAsync("third response");
-            //});
 
             // execute errors controller when request path not found, unauthorized,bad request   
             app.UseStatusCodePagesWithReExecute("/errors/{0}");

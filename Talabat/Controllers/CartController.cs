@@ -20,8 +20,6 @@ namespace Talabat.APIs.Controllers
         }
 
         [HttpGet("{id}")]
-
-
         // some changes
         public async Task<ActionResult<CustomerCart>> GetCartAsync(string id)
         {

@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Talabat.Infrastructure.Data;
 
 #nullable disable
 
-namespace Talabat.Infrastructure.Generic_Repository.Data.Migrations
+namespace Talabat.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
     [Migration("20240527081348_UpdateProductConfigurations")]

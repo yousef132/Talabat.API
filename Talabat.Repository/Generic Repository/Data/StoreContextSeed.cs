@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using Talabat.Core.Entities;
 
-namespace Talabat.Repository.Data
+namespace Talabat.Infrastructure.Generic_Repository.Data
 {
     public class StoreContextSeed
     {
         public async static Task SeedAsync(StoreContext context)
         {
-            if (context.ProductBrands.Count()==0)
+            if (context.ProductBrands.Count() == 0)
             {
 
                 var Brands = File.ReadAllText("../Talabat.Repository/Data/DataSeeding/brands.json");
@@ -27,7 +22,7 @@ namespace Talabat.Repository.Data
                     context.SaveChanges();
                 }
             }
-            if (context.ProductCategories.Count()==0)
+            if (context.ProductCategories.Count() == 0)
             {
 
                 var categories = File.ReadAllText("../Talabat.Repository/Data/DataSeeding/categories.json");

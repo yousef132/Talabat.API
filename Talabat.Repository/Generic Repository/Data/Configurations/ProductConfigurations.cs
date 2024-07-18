@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Talabat.Core.Entities;
 
-namespace Talabat.Repository.Data.Configurations
+namespace Talabat.Repository.Generic_Repository.Data.Configurations
 {
     internal class ProductConfigurations : IEntityTypeConfiguration<Product>
     {
@@ -16,11 +16,11 @@ namespace Talabat.Repository.Data.Configurations
 
             builder.HasOne(p => p.Brand)
                 .WithMany()
-                .HasForeignKey(p=>p.BrandId);
+                .HasForeignKey(p => p.BrandId);
 
-            builder.HasOne(p=>p.Category)
+            builder.HasOne(p => p.Category)
                 .WithMany()
-                .HasForeignKey(p=>p.CategoryId);
+                .HasForeignKey(p => p.CategoryId);
         }
     }
 }

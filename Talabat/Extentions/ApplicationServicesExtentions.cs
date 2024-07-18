@@ -2,7 +2,8 @@
 using Talabat.APIs.Errors;
 using Talabat.APIs.Helpers;
 using Talabat.Core.Repositories.Contract;
-using Talabat.Repository;
+using Talabat.Infrastructure.Cart_Repository;
+using Talabat.Infrastructure.Generic_Repository;
 
 namespace Talabat.APIs.Extentions
 {
@@ -11,6 +12,7 @@ namespace Talabat.APIs.Extentions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped(typeof(ICartRepository), typeof(CartRepository));
             // services.AddAutoMapper(m => m.AddProfile(new MappingProfiles())); 
             services.AddAutoMapper(typeof(MappingProfiles));
 
@@ -34,6 +36,8 @@ namespace Talabat.APIs.Extentions
 
                 };
             });
+
+
 
             return services;
         }

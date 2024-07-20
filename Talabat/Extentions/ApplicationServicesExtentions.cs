@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Talabat.APIs.Errors;
 using Talabat.APIs.Helpers;
 using Talabat.Core.Entities.Identity;
 using Talabat.Core.Repositories.Contract;
+using Talabat.Core.Services.Contract;
 using Talabat.Infrastructure.Cart_Repository;
 using Talabat.Infrastructure.Generic_Repository;
 using Talabat.Infrastructure.Identity;
+using Talabat.Service.AuthService;
 
 namespace Talabat.APIs.Extentions
 {
@@ -25,6 +30,8 @@ namespace Talabat.APIs.Extentions
             // 3- role manager 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>();
+
+            services.AddScoped<IAuthService, AuthService>();
 
             services.Configure<ApiBehaviorOptions>(opt =>
             {
@@ -49,7 +56,38 @@ namespace Talabat.APIs.Extentions
 
 
 
+
+
+
             return services;
         }
+
+        public static IServiceCollection AddAuthServices(this IServiceCollection services, IConfiguration configuration)
+        {
+
+            services.AddAuthentication(opt =>
+            {
+                // valid schemes
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = configuration["JWT:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = configuration["JWT:Audience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Key"]))
+
+                };
+
+            });
+
+            return services;
+        }
+
     }
 }

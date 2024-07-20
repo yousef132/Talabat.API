@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Talabat.APIs.DTOs;
 using Talabat.APIs.Errors;
@@ -28,18 +29,21 @@ namespace Talabat.APIs.Controllers
             this.brandRepository = brandRepository;
         }
 
+
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<PaginationResponse<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecificationsParams specsParams)
         {
             var specs = new ProductWithBrandAndCategorySpecifications(specsParams);
             var products = await productRepository.GetAllWithSpecificationAsync(specs);
+
             #region Getting Count Of Data
             var countSpecs = new ProductWithFiltrationForCountSpecifications(specsParams);
             var count = await productRepository.GetCountAsync(countSpecs);
             #endregion
+
             var data = mapper.Map<IReadOnlyList<ProductToReturnDto>>(products);
             return Ok(new PaginationResponse<ProductToReturnDto>(specsParams.PageIndex, specsParams.PageSize, count, data));
-
         }
 
 
@@ -63,6 +67,8 @@ namespace Talabat.APIs.Controllers
             return Ok(brands);
 
         }
+
+
         [HttpGet("categories")]
         public async Task<ActionResult<IReadOnlyList<ProductCategory>>> GetCategories()
         {

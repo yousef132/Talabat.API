@@ -17,7 +17,11 @@ namespace Talabat
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddNewtonsoftJson(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
             builder.Services.AddDbContext<StoreContext>(options =>
@@ -36,8 +40,10 @@ namespace Talabat
                 return ConnectionMultiplexer.Connect(configs);
             });
 
-            builder.Services.AddApplicationServices();
-            builder.Services.AddSwaggerServices();
+            builder.Services.AddApplicationServices()
+                .AddAuthServices(builder.Configuration);
+            builder.Services.AddSwaggerServices().AddSwaggerDocumentation();
+
 
 
             var app = builder.Build();
@@ -46,6 +52,7 @@ namespace Talabat
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<StoreContext>();
             var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             var identityDbContext = services.GetRequiredService<ApplicationIdentityDbContext>();
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
             try
@@ -54,7 +61,7 @@ namespace Talabat
                 await StoreContextSeed.SeedAsync(context);
                 await identityDbContext.Database.MigrateAsync();
 
-                await ApplicationIdentityDataSeeding.SeedUserAsync(userManager);
+                await ApplicationIdentityDataSeeding.SeedUserAsync(userManager, roleManager);
             }
             catch (Exception ex)
             {
@@ -73,12 +80,10 @@ namespace Talabat
             app.UseMiddleware<ExceptionMiddleware>();
 
 
-            // execute errors controller when request path not found, unauthorized,bad request   
+            // execute errors controller when request path not found, unauthorized and bad request   
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
-
             app.MapControllers();
 
             app.Run();

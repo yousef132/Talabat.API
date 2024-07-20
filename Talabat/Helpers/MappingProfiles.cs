@@ -2,6 +2,7 @@
 using Talabat.APIs.DTOs;
 using Talabat.Core.Entities;
 using Talabat.Core.Entities.Cart;
+using Talabat.Core.Entities.Identity;
 
 namespace Talabat.APIs.Helpers
 {
@@ -17,6 +18,7 @@ namespace Talabat.APIs.Helpers
 
             CreateMap<CustomerCartDto, CustomerCart>();
             CreateMap<CartItemDto, CartItem>();
+            CreateMap<Address, AddressDto>().ReverseMap();
 
         }
     }

@@ -5,8 +5,17 @@ namespace Talabat.Infrastructure.Identity.DataSeed
 {
     public static class ApplicationIdentityDataSeeding
     {
-        public static async Task SeedUserAsync(UserManager<ApplicationUser> userManager)
+        public static async Task SeedUserAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
+            if (!roleManager.Roles.Any())
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+                await roleManager.CreateAsync(new IdentityRole("Customer"));
+
+            }
+
+
+
             if (!userManager.Users.Any())
             {
                 var user = new ApplicationUser()
@@ -18,11 +27,16 @@ namespace Talabat.Infrastructure.Identity.DataSeed
                 };
 
                 await userManager.CreateAsync(user, "Aa@123.123");
+
+
+                await userManager.AddToRoleAsync(user, "Admin");
             }
 
 
 
         }
+
+
 
     }
 }

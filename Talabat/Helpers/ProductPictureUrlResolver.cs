@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.Execution;
 using Talabat.APIs.DTOs;
-using Talabat.Core.Entities;
+using Talabat.Core.Entities.Product_Aggregate;
 
 namespace Talabat.APIs.Helpers
 {
@@ -17,8 +16,8 @@ namespace Talabat.APIs.Helpers
         {
             if (!string.IsNullOrEmpty(source.PictureUrl))
                 return $"{configuration["BaseUrl"]}/{source.PictureUrl}";
-            return string.Empty ;
-                
+            return string.Empty;
+
         }
     }
 }

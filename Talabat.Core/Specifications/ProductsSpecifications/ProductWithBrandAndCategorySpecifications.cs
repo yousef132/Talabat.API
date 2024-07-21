@@ -1,4 +1,4 @@
-﻿using Talabat.Core.Entities;
+﻿using Talabat.Core.Entities.Product_Aggregate;
 
 namespace Talabat.Core.Spepcifications.ProductsSpecifications
 {

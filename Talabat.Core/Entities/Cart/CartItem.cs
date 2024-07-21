@@ -3,7 +3,7 @@
     // product selected as an item in the cart with specific quantity
     public class CartItem
     {
-        // id of product and  at the same time item id
+        // id of product and item  at the same time
         public int Id { get; set; }
 
         public string Name { get; set; }

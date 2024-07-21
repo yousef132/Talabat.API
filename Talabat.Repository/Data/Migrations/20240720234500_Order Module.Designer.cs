@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Talabat.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Talabat.Infrastructure.Data;
 namespace Talabat.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20240720234500_Order Module")]
+    partial class OrderModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +50,7 @@ namespace Talabat.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeliveryMethod", (string)null);
+                    b.ToTable("DeliveryMethod");
                 });
 
             modelBuilder.Entity("Talabat.Core.Entities.Order_Aggregate.Order", b =>
@@ -83,7 +86,7 @@ namespace Talabat.Infrastructure.Data.Migrations
 
                     b.HasIndex("DeliveryMethodId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Talabat.Core.Entities.Order_Aggregate.OrderItem", b =>
@@ -107,7 +110,7 @@ namespace Talabat.Infrastructure.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Talabat.Core.Entities.Product_Aggregate.Product", b =>
@@ -145,7 +148,7 @@ namespace Talabat.Infrastructure.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Talabat.Core.Entities.Product_Aggregate.ProductBrand", b =>
@@ -162,7 +165,7 @@ namespace Talabat.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductBrands", (string)null);
+                    b.ToTable("ProductBrands");
                 });
 
             modelBuilder.Entity("Talabat.Core.Entities.Product_Aggregate.ProductCategory", b =>
@@ -179,7 +182,7 @@ namespace Talabat.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategories", (string)null);
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("Talabat.Core.Entities.Order_Aggregate.Order", b =>
@@ -216,7 +219,7 @@ namespace Talabat.Infrastructure.Data.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders", (string)null);
+                            b1.ToTable("Orders");
 
                             b1.WithOwner("Order")
                                 .HasForeignKey("OrderId");
@@ -255,7 +258,7 @@ namespace Talabat.Infrastructure.Data.Migrations
 
                             b1.HasKey("OrderItemId");
 
-                            b1.ToTable("OrderItems", (string)null);
+                            b1.ToTable("OrderItems");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderItemId");

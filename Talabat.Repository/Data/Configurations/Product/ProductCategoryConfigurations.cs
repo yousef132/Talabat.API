@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Talabat.Core.Entities;
+using Talabat.Core.Entities.Product_Aggregate;
 
-namespace Talabat.Infrastructure.Data.Configurations
+namespace Talabat.Infrastructure.Data.Configurations.Product
 {
     internal class ProductCategoryConfigurations : IEntityTypeConfiguration<ProductCategory>
     {

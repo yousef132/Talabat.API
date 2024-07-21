@@ -2,7 +2,7 @@
 
 namespace Talabat.Core.Entities.Identity
 {
-    public class Address : BaseEntity
+    public class UserAddress : BaseEntity
     {
         #region Customer Name
 

@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Talabat.Core.Entities;
 
-namespace Talabat.Infrastructure.Data.Configurations
+namespace Talabat.Infrastructure.Data.Configurations.Product
 {
-    internal class ProductConfigurations : IEntityTypeConfiguration<Product>
+    internal class ProductConfigurations : IEntityTypeConfiguration<Talabat.Core.Entities.Product_Aggregate.Product>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Talabat.Core.Entities.Product_Aggregate.Product> builder)
         {
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Description).IsRequired();

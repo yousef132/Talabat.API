@@ -17,8 +17,6 @@ namespace Talabat.Infrastructure.Generic_Repository
         public async Task<IReadOnlyList<T>> GetAllAsync()
             => await context.Set<T>().ToListAsync();
 
-
-
         public async Task<T?> GetAsync(int id)
             => await context.Set<T>().FindAsync(id);
         public async Task<IReadOnlyList<T>> GetAllWithSpecificationAsync(ISpecifications<T> specs)
@@ -31,5 +29,14 @@ namespace Talabat.Infrastructure.Generic_Repository
 
         public async Task<int> GetCountAsync(ISpecifications<T> specs)
             => await ApplySpecification(specs).CountAsync();
+
+        public async Task Add(T entity)
+            => await context.Set<T>().AddAsync(entity);
+
+        public void Delete(T entity)
+            => context.Set<T>().Remove(entity);
+
+        public void Update(T entity)
+            => context.Set<T>().Update(entity);
     }
 }

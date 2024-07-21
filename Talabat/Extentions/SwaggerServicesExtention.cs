@@ -2,7 +2,7 @@
 
 namespace Talabat.APIs.Extentions
 {
-    public static class SwaggerServicesExtention
+    public static class SwaggerServicesExtension
     {
         public static IServiceCollection AddSwaggerServices(this IServiceCollection services)
         {

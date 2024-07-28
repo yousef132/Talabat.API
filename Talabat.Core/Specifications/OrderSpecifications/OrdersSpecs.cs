@@ -21,5 +21,6 @@ namespace Talabat.Core.Specifications.OrderSpecifications
             AddInclude(o => o.DeliveryMethod);
             AddInclude(o => o.Items);
         }
+
     }
 }

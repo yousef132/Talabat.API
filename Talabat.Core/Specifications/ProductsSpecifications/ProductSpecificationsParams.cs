@@ -5,7 +5,7 @@
         public string? Sort { get; set; }
         private string productName;
 
-        public string ProductName
+        public string? ProductName
         {
             get { return productName; }
             set { productName = value.ToLower(); }

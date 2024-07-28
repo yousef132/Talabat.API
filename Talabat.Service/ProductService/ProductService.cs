@@ -4,7 +4,7 @@ using Talabat.Core.Services.Contract;
 using Talabat.Core.Specifications.ProductsSpecifications;
 using Talabat.Core.Spepcifications.ProductsSpecifications;
 
-namespace Talabat.Service
+namespace Talabat.Service.ProductService
 {
     public class ProductService : IProductService
     {

@@ -2,7 +2,7 @@
 {
     public class OrderItem : BaseEntity
     {
-        // for EF CORE
+        //just for EF CORE
         private OrderItem()
         {
 

@@ -13,8 +13,11 @@ using Talabat.Infrastructure;
 using Talabat.Infrastructure.Cart_Repository;
 using Talabat.Infrastructure.Generic_Repository;
 using Talabat.Infrastructure.Identity;
-using Talabat.Service;
 using Talabat.Service.AuthService;
+using Talabat.Service.Cache_Service;
+using Talabat.Service.OrderService;
+using Talabat.Service.PaymentService;
+using Talabat.Service.ProductService;
 
 namespace Talabat.APIs.Extentions
 {
@@ -27,6 +30,8 @@ namespace Talabat.APIs.Extentions
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(IOrderService), typeof(OrderService));
             services.AddScoped(typeof(IProductService), typeof(ProductService));
+            services.AddScoped(typeof(IPaymentService), typeof(PaymentService));
+            services.AddSingleton(typeof(IResponseCacheService), typeof(ResponseCacheService));
             services.AddAutoMapper(typeof(MappingProfiles));
             // services.AddAutoMapper(m => m.AddProfile(new MappingProfiles())); 
 

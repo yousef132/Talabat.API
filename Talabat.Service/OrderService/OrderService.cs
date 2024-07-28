@@ -5,21 +5,24 @@ using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Services.Contract;
 using Talabat.Core.Specifications.OrderSpecifications;
 
-namespace Talabat.Service.AuthService
+namespace Talabat.Service.OrderService
 {
     public class OrderService : IOrderService
     {
         private readonly ICartRepository cartRepository;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IPaymentService paymentService;
 
         public OrderService(
              ICartRepository cartRepository,
-             IUnitOfWork unitOfWork
+             IUnitOfWork unitOfWork,
+             IPaymentService paymentService
 
             )
         {
             this.cartRepository = cartRepository;
             this.unitOfWork = unitOfWork;
+            this.paymentService = paymentService;
         }
         public async Task<Order?> CreateOrderAsync(string cartId, Address shippingAddress, string buyerEmail, int deliveryMethodId)
         {
@@ -48,10 +51,23 @@ namespace Talabat.Service.AuthService
 
             var deliveryMethod = await unitOfWork.Repository<DeliveryMethod>().GetAsync(deliveryMethodId);
 
+            var orderRepo = unitOfWork.Repository<Order>();
 
-            var order = new Order(buyerEmail, shippingAddress, deliveryMethodId, deliveryMethod, orderItems, subTotal);
 
-            await unitOfWork.Repository<Order>().Add(order);
+            var spec = new OrderWithPaymentIntentSpecification(cart?.PaymentIntentId);
+            var existingOrder = await orderRepo.GetWithSpecificationAsync(spec);
+
+            if (existingOrder != null)
+            {
+                orderRepo.Delete(existingOrder);
+                await paymentService.CreateOrUpdatePaymentIntent(cartId);
+
+            }
+
+
+            var order = new Order(buyerEmail, shippingAddress, deliveryMethodId, deliveryMethod, orderItems, subTotal, cart.PaymentIntentId);
+
+            await orderRepo.Add(order);
             var result = await unitOfWork.CompleteAsync();
             if (result <= 0)
                 return null;

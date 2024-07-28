@@ -10,12 +10,12 @@ namespace Talabat.APIs.Controllers
 {
     [Authorize]
 
-    public class OrdersController : BaseController
+    public class OrderController : BaseController
     {
         private readonly IOrderService orderService;
         private readonly IMapper mapper;
 
-        public OrdersController(IOrderService orderService, IMapper mapper)
+        public OrderController(IOrderService orderService, IMapper mapper)
         {
             this.orderService = orderService;
             this.mapper = mapper;

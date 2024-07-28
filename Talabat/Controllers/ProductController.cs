@@ -26,6 +26,7 @@ namespace Talabat.APIs.Controllers
 
         [HttpGet]
         [Authorize]
+        [Cache(600)]
         public async Task<ActionResult<PaginationResponse<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecificationsParams specsParams)
         {
             var products = await productService.GetProductsAsync(specsParams);
@@ -41,6 +42,8 @@ namespace Talabat.APIs.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Cache(600)]
+
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
             var product = await productService.GetProductByIdAsync(id);
@@ -51,6 +54,8 @@ namespace Talabat.APIs.Controllers
 
 
         [HttpGet("brands")]
+        [Cache(600)]
+
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetBrands()
         {
             var brands = await productService.GetBrandsAsync();
@@ -60,6 +65,8 @@ namespace Talabat.APIs.Controllers
 
 
         [HttpGet("categories")]
+        [Cache(600)]
+
         public async Task<ActionResult<IReadOnlyList<ProductCategory>>> GetCategories()
         {
             var categories = await productService.GetBrandsAsync();
